@@ -1,7 +1,9 @@
+// Comienzo
+
 class JuegoMemoria {
     constructor() {
         this.simbolos = ['🍎', '🍌', '🍒', '🍇', '🍉', '🍍', '🥝', '🍓'];
-        this.cartas = [...this.simbolos, ...this.simbolos];  // Duplicamos los símbolos para crear pares
+        this.cartas = [...this.simbolos, ...this.simbolos];  // se duplican los símbolos para crear pares
         this.tablero = document.getElementById('tablero');
         this.reiniciarBtn = document.getElementById('reiniciar');
         this.tarjetas = [];
@@ -11,24 +13,24 @@ class JuegoMemoria {
         this.movimientos = 0;
         this.maxPares = this.simbolos.length;
 
-        // Cargar el progreso desde localStorage si existe
+        // Se carga el progreso desde localStorage si existe
         this.cargarProgreso();
 
-        // Inicializar juego
+        // Se inicializa el juego
         this.crearTablero();
         this.eventos();
     }
 
-    // Método para crear el tablero
+    // Con este método, se crea el tablero
     crearTablero() {
-        // Mezclar las cartas usando una función de orden superior
+        // Se mezclan las cartas usando con función de orden superior
         this.cartas.sort(() => Math.random() - 0.5);
 
-        // Limpiar el tablero
+        // Se limpia el tablero
         this.tablero.innerHTML = '';
         this.tarjetas = [];
 
-        // Crear las tarjetas en el DOM
+        // Se crean las tarjetas en el DOM
         this.cartas.forEach((simbolo, index) => {
             const tarjeta = document.createElement('div');
             tarjeta.classList.add('tarjeta');
@@ -41,11 +43,11 @@ class JuegoMemoria {
         });
     }
 
-    // Método para seleccionar tarjeta
+    //  Se selecciona la tarjeta
     seleccionarTarjeta(e) {
         const tarjetaSeleccionada = e.target;
 
-        // No hacer nada si es la misma tarjeta o ya está oculta
+        // Condicional para no hacer nada si es la misma tarjeta o ya está oculta
         if (tarjetaSeleccionada === this.primeraSeleccion || tarjetaSeleccionada.classList.contains('oculta')) {
             return;
         }
@@ -59,7 +61,7 @@ class JuegoMemoria {
             this.segundaSeleccion = tarjetaSeleccionada;
             this.movimientos++;
 
-            // Verificar si las tarjetas coinciden
+            // Se verifican si las tarjetas coinciden
             if (this.primeraSeleccion.dataset.simbolo === this.segundaSeleccion.dataset.simbolo) {
                 this.paresEncontrados++;
                 this.primeraSeleccion.classList.add('oculta');
@@ -74,7 +76,7 @@ class JuegoMemoria {
                 }, 1000);
             }
 
-            // Verificar si el juego ha terminado
+            // Se verifica si el juego ha terminado
             if (this.paresEncontrados === this.maxPares) {
                 setTimeout(() => {
                     alert(`¡Felicidades! Has encontrado todos los pares en ${this.movimientos} movimientos.`);
@@ -84,13 +86,13 @@ class JuegoMemoria {
         }
     }
 
-    // Método para reiniciar la selección
+    // Se reinicia la selección
     resetearSeleccion() {
         this.primeraSeleccion = null;
         this.segundaSeleccion = null;
     }
 
-    // Método para reiniciar el juego
+    // Se reinicia el juego
     reiniciarJuego() {
         this.paresEncontrados = 0;
         this.movimientos = 0;
@@ -98,7 +100,7 @@ class JuegoMemoria {
         this.crearTablero();
     }
 
-    // Método para guardar el progreso en localStorage
+    // Se guarda el progreso en localStorage
     guardarProgreso() {
         const progreso = {
             paresEncontrados: this.paresEncontrados,
@@ -107,7 +109,7 @@ class JuegoMemoria {
         localStorage.setItem('progresoMemoria', JSON.stringify(progreso));
     }
 
-    // Método para cargar el progreso desde localStorage
+    // Se carga el progreso desde localStorage
     cargarProgreso() {
         const progresoGuardado = localStorage.getItem('progresoMemoria');
         if (progresoGuardado) {
@@ -118,13 +120,13 @@ class JuegoMemoria {
         }
     }
 
-    // Método para manejar eventos
+    // Con este método se manejan los eventos
     eventos() {
         this.reiniciarBtn.addEventListener('click', this.reiniciarJuego.bind(this));
     }
 }
 
-// Inicializar el juego al cargar la página
+// Se inciializa el juego al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
     new JuegoMemoria();
 });
